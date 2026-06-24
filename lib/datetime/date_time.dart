@@ -19,16 +19,25 @@ String getTodayDateString() {
   return yyyymmdd;
 }
 
-DateTime convertStringToDate(String yyyymmdd) {
-  // year
-  int yyyy = int.parse(yyyymmdd.substring(0, 4));
-  // month
-  int mm = int.parse(yyyymmdd.substring(4, 6));
-  // day
-  int dd = int.parse(yyyymmdd.substring(6, 8));
+DateTime convertStringToDate(String? yyyymmdd) {
+  // validate input
+  if (yyyymmdd == null || yyyymmdd.length != 8) {
+    return DateTime.now();
+  }
 
-  DateTime dateTimeObject = DateTime(yyyy, mm, dd);
-  return dateTimeObject;
+  try {
+    // year
+    int yyyy = int.parse(yyyymmdd.substring(0, 4));
+    // month
+    int mm = int.parse(yyyymmdd.substring(4, 6));
+    // day
+    int dd = int.parse(yyyymmdd.substring(6, 8));
+
+    DateTime dateTimeObject = DateTime(yyyy, mm, dd);
+    return dateTimeObject;
+  } catch (e) {
+    return DateTime.now();
+  }
 }
 
 String convertDateTimeToString(DateTime dateTime) {

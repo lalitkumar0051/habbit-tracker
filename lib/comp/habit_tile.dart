@@ -4,7 +4,7 @@ class HabitTile extends StatelessWidget {
   final String habitName;
   final bool habitCompleted;
   final Function(bool?)? onChanged;
-  final VoidCallback? onDelete;
+  final VoidCallback onDelete;
   const HabitTile({
     super.key,
     required this.habitName,
@@ -24,7 +24,7 @@ class HabitTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
-          mainAxisAlignment: .spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
@@ -33,11 +33,14 @@ class HabitTile extends StatelessWidget {
                 //habit name
                 Text(
                   habitName,
-                  style: TextStyle(fontWeight: .bold, fontSize: 20),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ],
             ),
-            IconButton(onPressed: onDelete, icon: Icon(Icons.delete)),
+            IconButton(
+              onPressed: onDelete,
+              icon: Icon(Icons.delete, semanticLabel: 'Delete habit'),
+            ),
           ],
         ),
       ),

@@ -4,6 +4,7 @@ import 'package:habit_tracker_new/comp/habit_tile.dart';
 import 'package:habit_tracker_new/comp/monthly_summary.dart';
 import 'package:habit_tracker_new/comp/new_habit_box.dart';
 import 'package:habit_tracker_new/data/habit_database.dart';
+import 'package:habit_tracker_new/datetime/date_time.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   final _newHabitNameController = TextEditingController();
   HabitDatabase db = HabitDatabase();
   final _myBox = Hive.box('Habit_Database');
-  
+
   @override
   void initState() {
     // if first time ever opening the app, then create default data
@@ -85,12 +86,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    _newHabitNameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // Scaffold Color
       backgroundColor: Colors.grey[300],
       // App Bar
-      appBar: AppBar(title: const Text('Habtit Tracker')),
+      appBar: AppBar(title: const Text('Habit Tracker')),
       // floating action button
       floatingActionButton: FloatingButton(onPressed: createNewHabit),
       // List of habits
@@ -98,7 +105,11 @@ class _HomePageState extends State<HomePage> {
         children: [
           MonthlySummary(
             datasets: db.heatMapDataSet,
-            startDate: _myBox.get("START_DATE"),
+            startDate:
+                _myBox.get("START_DATE") ??
+                convertDateTimeToString(
+                  DateTime.now().subtract(Duration(days: 365)),
+                ),
           ),
 
           ListView.builder(

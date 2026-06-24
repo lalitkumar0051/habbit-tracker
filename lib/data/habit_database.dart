@@ -22,19 +22,23 @@ class HabitDatabase {
     DateTime oneYearAgo = DateTime.now().subtract(Duration(days: 365));
 
     _myBox.put("START_DATE", convertDateTimeToString(oneYearAgo));
+    // persist initial data to database
+    updateDatabase();
   }
 
   // load data from database
   void loadData() {
     // if it is a new day, get habit list from database
     if (_myBox.get(getTodayDateString()) == null) {
-      todaysHabitList = _myBox.get("CURRENT_HABIT_LIST");
+      var data = _myBox.get("CURRENT_HABIT_LIST");
+      todaysHabitList = data ?? [];
       // set all habit completed to false since it is a new day
       for (var i = 0; i < todaysHabitList.length; i++) {
         todaysHabitList[i][1] = false;
       }
     } else {
-      todaysHabitList = _myBox.get(getTodayDateString());
+      var data = _myBox.get(getTodayDateString());
+      todaysHabitList = data ?? [];
     }
   }
 

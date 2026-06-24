@@ -5,6 +5,9 @@ class FloatingButton extends StatelessWidget {
   const FloatingButton({super.key, required this.onPressed});
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(onPressed: onPressed, child: Icon(Icons.add));
+    return FloatingActionButton(
+      onPressed: onPressed,
+      child: Icon(Icons.add, semanticLabel: 'Add new habit'),
+    );
   }
 }
